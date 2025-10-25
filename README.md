@@ -14,3 +14,4 @@ Problem sheets will be added as the term progresses.
 **R**: code illustrating some points made in lectures. Not part of the  
 taught course but may be useful.
 
+[Geoff Nicholls](https://www.stats.ox.ac.uk/people/geoff-nicholls), Michaelmas 2025
