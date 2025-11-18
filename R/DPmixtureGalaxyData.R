@@ -39,6 +39,7 @@ CL=matrix(NA,J/SS,nd); PL=matrix(NA,J/SS,3); TH=list();
 db=1 #set to 0 to get CRP prior over dbns
 
 #MCMC J steps each step sweeps mu, sigma and the cluster membership
+set.seed(1)
 for (j in 1:J) {
 
   nS=table(S) #the number of pts in each cluster
@@ -114,20 +115,6 @@ for (j in 1:J) {
       S[ib]=S[ib]-1; 
       mu=mu[-k]; 
       sg=sg[-k]
-      
-      #standardise labeling
-      b=rep(NA,max(S)); b[S[1]]=1
-      d=1; So=S;
-      for (a in 1:length(S)) {
-        x=S[a];
-        if (is.na(b[x])) {
-          d=d+1
-          b[x]=d;
-        }
-        So[a]=b[x]
-      }
-      o=order(b)
-      mu=mu[o]; sg=sg[o]
     }
   }
   
@@ -167,7 +154,7 @@ for (i in 1:nd) {
     }
   }
 }
-com=com/(J/SS)
+com=com/(Nsamp)
 image(com)
 ###
 
@@ -188,6 +175,8 @@ log.lkd<-function(y,w,mu,sigma) {
   }
   return(tot)
 }
+
+
 
 ###
 #compute posterior predictive distributions - weights (w) vs. means (mu) scatter plot
@@ -224,7 +213,7 @@ mden=apply(den,2,sum)/Nsamp  #this is the estimate of the posterior predictive.
 #data
 hist(y,breaks=x,freq=FALSE,main='',xlab='velocity',ylab='density')
 #posterior preditive dbn conditioned on "i" components
-for (i in 2:4) {
+for (i in c(1,3,5)) {
   lines(x,cden[i,],lwd=2,col=i+1)
 }
 #posterior predictive mean
@@ -239,4 +228,17 @@ for (i in 1:Nsamp) {
 }
 #dev.off()
 
+###
+#debugging relics
 
+# Nsamp=max(which(!is.na(PL[,1])))
+# THs=TH; CLs=CL; PLs=PL
+# TH<-TH[1:Nsamp]
+# CL<-CL[1:Nsamp,]
+# PL<-PL[1:Nsamp,]
+i=42
+mv=sapply(100:Nsamp,function(x) TH[[x]]$mu[CL[x,i]])
+sv=sapply(100:Nsamp,function(x) TH[[x]]$sigma[CL[x,i]])
+plot(sv,mv,main=paste('mu, sigma for the cluster y[i] with i=',as.character(i),' is in',sep=""),
+                      xlab='mu',ylab='sigma')
+abline(h=y[i],col=2,lwd=2)
