@@ -115,19 +115,6 @@ for (j in 1:J) {
       S[ib]=S[ib]-1; 
       mu=mu[-k]; 
       sg=sg[-k]
-      # #standardise labeling
-      # b=rep(NA,max(S)); b[S[1]]=1
-      # d=1; So=S;
-      # for (a in 1:length(S)) {
-      #   x=S[a];
-      #   if (is.na(b[x])) {
-      #     d=d+1
-      #     b[x]=d;
-      #   }
-      #   So[a]=b[x]
-      # }
-      # o=order(b)
-      # mu=mu[o]; sg=sg[o]
     }
   }
   
