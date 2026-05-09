@@ -5,7 +5,11 @@ and panopto see the [SC7 canvas page](https://canvas.ox.ac.uk/courses/295102).
 I am putting this material here in order to put it outside the canvas firewall.  
 It makes it easier to put links in my lecture notes to code.
 
+Also handy when canvas goes down!
+
 **Lecture Notes**: folder has the latest version of the lecture notes.  
+
+**Past Papers**: old papers and solutions.
 
 **Problem Sheets**: exercises with solutions to selected problems.  
 Problem sheets will be added as the term progresses.
