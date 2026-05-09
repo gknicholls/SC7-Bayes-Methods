@@ -9,7 +9,7 @@ Also handy when canvas goes down!
 
 **Lecture Notes**: folder has the latest version of the lecture notes.  
 
-**Past Papers**: old papers and solutions.
+**Past Papers**: (added 08/05/2026) old papers and solutions.
 
 **Problem Sheets**: exercises with solutions to selected problems.  
 Problem sheets will be added as the term progresses.
