@@ -1,6 +1,6 @@
 ## SC7-Bayes-Methods
 Selected teaching material updated durng term. For panopto see the  
-[SC7 canvas page](https://canvas.ox.ac.uk/courses/295102)
+[SC7 canvas page](https://canvas.ox.ac.uk/courses/298238)
 
 I am putting this material here in order to put it outside the canvas firewall.  
 It makes it easier to put links in my lecture notes to code.
