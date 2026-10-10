@@ -1,13 +1,13 @@
 ## SC7-Bayes-Methods
 Selected teaching material updated durng term. For panopto see the  
-[SC7 canvas page](https://canvas.ox.ac.uk/courses/295102)
+[SC7 canvas page](https://canvas.ox.ac.uk/courses/298238)
 
 I am putting this material here in order to put it outside the canvas firewall.  
 It makes it easier to put links in my lecture notes to code.
 
 **Lecture Notes**: folder has the latest version of the lecture notes.  
 
-**Lecture Slides**: lecture slides from MT25. MT26 will be added as they are completed.
+**Lecture Slides**: lecture slides for MT26 will be added as they are completed.
 
 **Problem Sheets**: exercises with solutions to selected problems.  
 Problem sheets will be added as the term progresses.
