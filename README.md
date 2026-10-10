@@ -7,7 +7,7 @@ It makes it easier to put links in my lecture notes to code.
 
 **Lecture Notes**: folder has the latest version of the lecture notes.  
 
-**Lecture Slides**: lecture slides from MT25.
+**Lecture Slides**: lecture slides from MT25. MT26 will be added as they are completed.
 
 **Problem Sheets**: exercises with solutions to selected problems.  
 Problem sheets will be added as the term progresses.
