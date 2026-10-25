@@ -1,4 +1,4 @@
-#PS3 Bayes Methods MT 2025
+#PS3 Bayes Methods
 library(coda); library(MCMCpack); library(lattice)
 
 #Code illustrating some of the methods from PS3 - this is all optional but may help with understanding
