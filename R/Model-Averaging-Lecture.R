@@ -14,7 +14,7 @@ plot(temp,fail)
 
 N=1000000
 prior.std.dev=3
-v=1/prior.std.dev^2 #precision v=1/9 is sigma^2=3 in prior
+v=1/prior.std.dev^2 #precision v=1/9 is sigma^2=9 in prior
 b.p=MCMCprobit(fail~temp,b0=c(0,0),B0=c(v,v),seed=4,mcmc=N,marginal.likelihood='Laplace')
 b.l=MCMClogit(fail~temp,b0=c(0,0),B0=c(v,v),seed=5,mcmc=N,marginal.likelihood='Laplace')
 
@@ -28,19 +28,19 @@ lkd<-function(beta,logit=T) {
 
 #First compute Bayes factors - gives weights for the two models
 l.pr=l.lo=pr.lo=pr.pr=l.lo.pr=l.pr.lo=rep(NA,N)
-for (k in 1:N) { #takes about a minute for N=1e6
+for (k in 1:N) { #takes a few minutes for N=1e6 on my laptop
   l.lo[k]=lkd(b.l[k,],logit=T); 
   l.pr[k]=lkd(b.p[k,],logit=F);
   l.lo.pr[k]=lkd(b.p[k,],logit=T); 
   l.pr.lo[k]=lkd(b.l[k,],logit=F);
-  pr.lo[k]=sum(dnorm(b.l[k,],0,9,log=T))
-  pr.pr[k]=sum(dnorm(b.p[k,],0,9,log=T))
+  #pr.lo[k]=sum(dnorm(b.l[k,],0,prior.std.dev,log=T))
+  #pr.pr[k]=sum(dnorm(b.p[k,],0,prior.std.dev,log=T))
 }
 
 #and Bridge using h=1/sqrt(p1*p2) - recommended by MW as good place to start
-BF=mean(exp(l.lo.pr/2-l.pr/2))/mean(exp(l.pr.lo/2-l.lo/2))
+(BF=mean(exp(l.lo.pr/2-l.pr/2))/mean(exp(l.pr.lo/2-l.lo/2)))
 
-#now compute pi(theta|y) averged over the two models
+#now compute pi(theta|y) averaged over the two models
 #pdf('linkfnMA.pdf',8,8)
 i=1
 bp=seq(min( c(b.p[,i],b.l[,i]) ), max(c(b.p[,i],b.l[,i])) ,length.out=100)
@@ -112,7 +112,7 @@ log.prior.model<-function(z,pr=xi,nc=p) {
 }
 
 #setup MCMC
-K=10000000; SS=1000; Nsamp=K/SS; #run for lect was 100 times longer
+K=1000000; SS=100; Nsamp=K/SS; #run for lect was 10 times longer
 TH=Z=THZ=matrix(NA,Nsamp,p); 
 colnames(TH)<-colnames(THZ)<-colnames(Z)<-colnames(X);
 SG=matrix(NA,Nsamp,1); colnames(SG)<-'sigma'

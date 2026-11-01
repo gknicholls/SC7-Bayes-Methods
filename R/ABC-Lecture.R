@@ -116,7 +116,7 @@ n=8; max.dis=(4*2+4*(n-2)*3+(n-2)^2*4)/2 #the maximum number of disagreeing nbrs
 s=n.disagree(Y)/max.dis #s=S(Y) scaled so 0<s<1 convenient for setting delta
 theta=S=c(); K=1000
 
-delta=0.1; #run this twice for delta=0.1/0.05
+delta=0.05; #run this twice for delta=0.1/0.05
 for (k in 1:K) {
   th=rexp(1,2)                #Exp(2) prior
   Yp=mcmc.ising(th,T=1000,n=8)#simulate Y'
@@ -126,8 +126,8 @@ for (k in 1:K) {
     S=c(S,sp)
   }
 }
-thetap1=theta; Sp1=S     #save results for different delta values
-#thetap05=theta; Sp08=S
+#thetap1=theta; Sp1=S     #save results for different delta values
+thetap05=theta; Sp05=S
 
 #pdf('IsingABC.pdf',6,6)
 plot(
