@@ -10,7 +10,7 @@ It makes it easier to put links in my lecture notes to code.
 **Lecture Slides**: lecture slides for MT26 will be added as they are completed.
 
 **Problem Sheets**: exercises with solutions to selected problems.  
-Problem sheets will be added as the term progresses.
+All problem sheets PS1-4 for this term are up to date.
 
 **R**: code illustrating some points made in lectures. Not part of the  
 taught course but may be useful.
