@@ -162,7 +162,9 @@ m<-function(T=10000,nu=8,x0=2) {
 X<-m(T<-1e4)
 
 plot(log(X))
-effectiveSize(as.mcmc(X))
+b=4; plot(X*(X<b)+b*(X>b))
+#variance of X is infinite so use a bounded function
+effectiveSize(as.mcmc(X*(X<b)+b*(X>b)))
 
 #check density correct in [L,U] any 0<L<U<infinity
 #care needed as singular at 0 and heavy tail
@@ -175,12 +177,13 @@ hist(X[L<X & X<U],round(sqrt(T)),freq=FALSE);
 lines(z,exp(lf(z))/Z,col=2)
 
 #choice of nu?
-nu=c(1,2,4,8,16,32); es=0*nu
+nu=c(1,2,4,8,16,32); es=0*nu; b=4
 for (k in 1:length(nu)) {
-  X<-m(T=1e6,nu=nu[k]); es[k]=effectiveSize(as.mcmc(X));  
+  X<-m(T=1e5,nu=nu[k]); es[k]=effectiveSize(as.mcmc(X*(X<b)+b*(X>b)))  
 }
 plot(nu,es) 
-#alot of variation but nu=1 tends to be lower than nu ~ 8
+#alot of variation but ESS at nu=2 tends to be higher than at nu=1 or 4
+#depends a bit on the seed
 
 #remark - actually the CDF and Z for this distribution can be computed exactly. For example
 #$\int_0^\infty x^(1/a)/(1+x^(1+b/a))dx=a\pi/((a+b)\sin(\pi(b-1)/(a+b)))$ for a>1 and b>1

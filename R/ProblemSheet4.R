@@ -108,7 +108,7 @@ lq<-function(xi) {
 PM=0; PSD=3; PS=1; PR=1; SHx=1.5; RTx=1/2; PrS=1/2;
 
 #setup MCMC
-K=10000; SS=10; Nsamp=K/SS; 
+K=100000; SS=10; Nsamp=K/SS; 
 TH=matrix(NA,Nsamp,4); colnames(TH)<-c('mu','sg','xi','is');
 L=matrix(NA,Nsamp,2); colnames(L)<-c('lpr','llk')
 #fixed dimension rw MH jump size
@@ -145,7 +145,8 @@ for (k in 1:K) {
   if (is) {
     xip=rgamma(1,shape=SHx,rate=RTx);
     MHR_num=log.lkd(mu,sg,xip,is,y)+log.prior.param(mu,sg,xip,is)+dgamma(xi,shape=SHx,rate=RTx,log=T);
-    MHR_den=log.lkd(mu,sg,xi,is,y)+log.prior.param(mu,sg,xi,is)+dgamma(xi,shape=SHx,rate=RTx,log=T);
+    MHR_den=log.lkd(mu,sg,xi,is,y)+log.prior.param(mu,sg,xi,is)+dgamma(xip,shape=SHx,rate=RTx,log=T);
+    #prior 2026 above line had a bug the last xip was xi, now fixed
     if (log(runif(1))<(MHR_num-MHR_den)) {
       xi=xip
     }
@@ -187,7 +188,12 @@ for (k in sample(1:Nsamp,20)) {
   lines(vx,vy,col=grey(0.8))
 }
 
-#overlay posterior predictive distribution
+#overlay the predictive distribution
+#this is a bit lazy it is not the posterior predictive p(y'|y) 
+#averaged over models and parameters, it is 
+#p(y'|mu.mean, sd.mean, xi.mean, M=skew) so the plug-in predictive
+#we get if we selected the skew model as correct and use the posterior
+#mean parameters as estimates of the true mu, sd, xi.
 thp=apply(TH,2,mean)
 vy=dsnorm(vx,mean=thp[1],sd=thp[2],xi=thp[3])
 lines(vx,vy,col=2)
@@ -312,7 +318,10 @@ for (t in 1:T) {
     
     #when we add to get back there are n-1 CP's in the new state so n intervals to choose from
     lam.ld=sum(dexp(lam[c(i-1,i)],rate=1/mu.lam,log=TRUE))  #this is like g_{m',m}(u')
-    q.up=-log(tm[i+1]-tm[i-1])-log(n)+log(p.up)+lam.ld
+    p.up.rev <- (n==1)+0.5*(n>1) 
+    #if n.new=0/n=1 then we propose to come back from 0 to n=1 wp 1; 
+    #if n.new=1,2,... so n=2,3,... then we come back wp 1/2
+    q.up=-log(tm[i+1]-tm[i-1])-log(n)+log(p.up.rev)+lam.ld
     
     #when we delete we choose a tm to delete - there are n of these in the current state
     lam.p.ld=dexp(lam.p,rate=1/mu.lam,log=TRUE)             #this is like g_{m,m'}(u)
