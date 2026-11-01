@@ -191,9 +191,9 @@ for (k in sample(1:Nsamp,20)) {
 #overlay the predictive distribution
 #this is a bit lazy it is not the posterior predictive p(y'|y) 
 #averaged over models and parameters, it is 
-#p(y'|mu.mean, sd.mean, xi.mean, M=skew) so the plug-in predictive
-#we get if we selected the skew model as correct and use the posterior
-#mean parameters as estimates of the true mu, sd, xi.
+#p(y'|mu.mean, sd.mean, xi.mean) so the plug-in predictive using the
+#posterior mean parameters as estimates of the true mu, sd, xi
+#(with xi=1 when M=1)
 thp=apply(TH,2,mean)
 vy=dsnorm(vx,mean=thp[1],sd=thp[2],xi=thp[3])
 lines(vx,vy,col=2)
