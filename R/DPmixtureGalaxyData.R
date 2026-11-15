@@ -21,7 +21,7 @@ log.prior.param<-function(mu,sg,mu0=20,sigma0=10,alpha0=2,beta0=1/9) {
 }
 
 sigma0=10; mu0=20
-alpha0=2; beta0=1/9 #IGamma sg^2 mean=beta/(alpha-1)=9 so sg~3
+alpha0=2; beta0=1/9 #IGamma sg^2 mean=beta/(alpha-1)=1/9 so sg~1/3
 
 #choice of alpha based on simulations above
 alpha=1
@@ -39,7 +39,7 @@ CL=matrix(NA,J/SS,nd); PL=matrix(NA,J/SS,3); TH=list();
 db=1 #set to 0 to get CRP prior over dbns
 
 #MCMC J steps each step sweeps mu, sigma and the cluster membership
-set.seed(1)
+set.seed(2)
 for (j in 1:J) {
 
   nS=table(S) #the number of pts in each cluster
@@ -213,11 +213,14 @@ mden=apply(den,2,sum)/Nsamp  #this is the estimate of the posterior predictive.
 #data
 hist(y,breaks=x,freq=FALSE,main='',xlab='velocity',ylab='density')
 #posterior preditive dbn conditioned on "i" components
-for (i in c(1,3,5)) {
-  lines(x,cden[i,],lwd=2,col=i+1)
+for (i in c(2,4,6)) {
+  lines(x,cden[i,],lwd=2,col=i/2+1)
 }
 #posterior predictive mean
 lines(x,mden,lwd=2,col=1)
+a<-table(d)
+names(a)
+legend('topright',col=c(2:4),lty=1,legend=c(paste('d=',names(a)[c(2,4,6)],sep='')))
 #dev.off()
 
 #shows the label switching if we dont sort mu at plot

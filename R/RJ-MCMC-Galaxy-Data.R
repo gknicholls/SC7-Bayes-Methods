@@ -46,8 +46,9 @@ w=1
 oll=log.lkd(y,w,mu,sigma)
 olp=log.prior(w,mu,sigma)
 
-K=100000; SS=100; Nsamp=K/SS;  #lecture used 10 x this
+K=100000; SS=10; Nsamp=K/SS;  #lecture used 10 x this
 PL=matrix(NA,Nsamp,3); colnames(PL)<-c("d","olp","oll"); TH=list();
+set.seed(2)
 for (k in 1:K) {
   OK=TRUE
   move=sample(1:5,1) #choose a MCMC move (2 birth death, 3 fixed dimension)
@@ -159,7 +160,7 @@ for (k in 1:Nsamp) {
   points(mu,w,pch='.',col=ind)
   den[ind,]=den[ind,]+exp(apply(t(x),2,log.lkd,w,mu,sigma))
 }
-#next line can throw an error if dims in sample are not contigious
+#next line can throw an error if dims in sample are not contiguous
 cden=den/as.vector(table(d)) #den/c(as.vector(table(d)),0)
 mden=apply(den,2,sum)/Nsamp
 #dev.off()
@@ -170,11 +171,15 @@ mden=apply(den,2,sum)/Nsamp
 #data
 hist(y,breaks=x,freq=FALSE,main='',xlab='velocity',ylab='density')
 #posterior predicitve mean
-for (i in c(4,6,8)) {
+for (i in c(2,6,10)) {
   #posterior predictive dbn conditioned on "i" components
-  lines(x,cden[i,],lwd=2,col=1+(i-2)/2)
+  lines(x,cden[i,],lwd=2,col=i/4+3/2)
 }
 lines(x,mden,col=1,lwd=3)
+a<-table(d)
+names(a)
+legend('topright',col=c(2:4),lty=1,legend=c(paste('d=',names(a)[c(2,6,10)],sep='')))
+
 #dev.off()
 
 #pdf('RJmixtureGdata.pdf',8,4)
